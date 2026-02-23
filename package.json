@@ -1,0 +1,13 @@
+{
+  "name": "nc-cabinet-design",
+  "version": "1.0.0",
+  "description": "Small business website for NC Cabinet Design",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["cabinet", "design", "business"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}
