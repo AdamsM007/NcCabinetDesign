@@ -1,5 +1,33 @@
-// Simple animation on scroll
+// Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.querySelector('.lg\\:hidden button');
+  const mobileMenu = document.querySelector('.hidden.lg\\:flex');
+  
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+      const nav = mobileMenuBtn.closest('nav');
+      let menu = nav.querySelector('.mobile-menu');
+      
+      if (!menu) {
+        menu = document.createElement('div');
+        menu.className = 'mobile-menu lg:hidden';
+        menu.innerHTML = `
+          <div class="px-6 py-4 space-y-3 bg-white border-t">
+            <a class="block text-sm font-medium text-[#1a1a1a] hover:text-[#8b7355]" href="index.html">Home</a>
+            <a class="block text-sm font-medium text-[#1a1a1a] hover:text-[#8b7355]" href="gallery.html">Gallery</a>
+            <a class="block text-sm font-medium text-[#1a1a1a] hover:text-[#8b7355]" href="quote.html">Get a Quote</a>
+            <a class="block text-sm font-medium text-[#1a1a1a] hover:text-[#8b7355]" href="contact.html">Contact</a>
+            <a href="quote.html" class="block">
+              <button class="w-full inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors bg-[#8b7355] hover:bg-[#6d5a44] text-white h-9 px-4 py-2">Free Estimate</button>
+            </a>
+          </div>
+        `;
+        nav.appendChild(menu);
+      }
+      
+      menu.style.display = menu.style.display === 'none' || !menu.style.display ? 'block' : 'none';
+    });
+  }
   // Make all hidden elements visible with animation
   const hiddenElements = document.querySelectorAll('[style*="opacity: 0"]');
   
