@@ -97,7 +97,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Gallery filter tabs
+  // Lightbox
+  let lightboxImages = [];
+  let lightboxIndex = 0;
+
+  window.openLightbox = function(img) {
+    lightboxImages = Array.from(document.querySelectorAll('.gallery-item:not([style*="none"]) img'));
+    lightboxIndex = lightboxImages.indexOf(img);
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeLightbox = function() {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  window.changeLightboxImage = function(dir) {
+    lightboxIndex = (lightboxIndex + dir + lightboxImages.length) % lightboxImages.length;
+    document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex].src;
+    event.stopPropagation();
+  };
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') changeLightboxImage(1);
+    if (e.key === 'ArrowLeft') changeLightboxImage(-1);
+  });
   const galleryTabs = document.querySelectorAll('.gallery-tab');
   const galleryItems = document.querySelectorAll('.gallery-item');
 
