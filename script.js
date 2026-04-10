@@ -99,12 +99,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Gallery filter tabs
   const galleryTabs = document.querySelectorAll('.gallery-tab');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
   galleryTabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      galleryTabs.forEach(t => {
-        t.classList.remove('active', 'shadow', 'bg-[#1a1a1a]', 'text-white');
-      });
+      const category = tab.dataset.category;
+
+      galleryTabs.forEach(t => t.classList.remove('active', 'shadow', 'bg-[#1a1a1a]', 'text-white'));
       tab.classList.add('active', 'shadow', 'bg-[#1a1a1a]', 'text-white');
+
+      galleryItems.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
     });
   });
 });
