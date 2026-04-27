@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       galleryItems.forEach(item => {
         if (category === 'all' || item.dataset.category === category) {
-          item.style.display = 'block';
+          item.style.display = '';
         } else {
           item.style.display = 'none';
         }
