@@ -1,5 +1,65 @@
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
+  emailjs.init('vgAF45gwHua1eyMm9');
+
+  // Quote form
+  const quoteForm = document.getElementById('quote-form');
+  if (quoteForm) {
+    quoteForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = quoteForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      const projectType = quoteForm.querySelector('select');
+      const selects = quoteForm.querySelectorAll('select');
+
+      emailjs.send('service_zbj5h36', 'template_u65cuew', {
+        from_name: quoteForm.querySelector('#name').value,
+        from_email: quoteForm.querySelector('#email').value,
+        phone: quoteForm.querySelector('#phone').value,
+        address: quoteForm.querySelector('#address').value,
+        project_type: selects[0].options[selects[0].selectedIndex].text,
+        description: quoteForm.querySelector('#description').value,
+        budget: selects[1].options[selects[1].selectedIndex].text,
+        timeline: selects[2].options[selects[2].selectedIndex].text,
+      }).then(() => {
+        btn.textContent = 'Request Sent!';
+        btn.style.backgroundColor = '#4a7c59';
+        quoteForm.reset();
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Submit Quote Request';
+        alert('Something went wrong. Please try again or call us directly.');
+      });
+    });
+  }
+
+  // Contact form
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      emailjs.send('service_zbj5h36', 'template_u65cuew', {
+        from_name: contactForm.querySelector('#name').value,
+        from_email: contactForm.querySelector('#email').value,
+        phone: contactForm.querySelector('#phone').value,
+        message: contactForm.querySelector('#message').value,
+      }).then(() => {
+        btn.textContent = 'Message Sent!';
+        btn.style.backgroundColor = '#4a7c59';
+        contactForm.reset();
+      }).catch(() => {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+        alert('Something went wrong. Please try again or call us directly.');
+      });
+    });
+  }
   const mobileMenuBtn = document.querySelector('.lg\\:hidden button');
   const mobileMenu = document.querySelector('.hidden.lg\\:flex');
   
