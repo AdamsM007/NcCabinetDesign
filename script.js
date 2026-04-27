@@ -128,21 +128,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const galleryTabs = document.querySelectorAll('.gallery-tab');
   const galleryItems = document.querySelectorAll('.gallery-item');
 
-  galleryTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const category = tab.dataset.category;
-
-      galleryTabs.forEach(t => t.classList.remove('active', 'shadow', 'bg-[#1a1a1a]', 'text-white'));
-      tab.classList.add('active', 'shadow', 'bg-[#1a1a1a]', 'text-white');
-
-      galleryItems.forEach(item => {
-        if (category === 'all' || item.dataset.category === category) {
-          item.style.display = '';
-        } else {
-          item.style.display = 'none';
-        }
-      });
+  function filterGallery(category) {
+    galleryTabs.forEach(t => t.classList.remove('active', 'shadow', 'bg-[#1a1a1a]', 'text-white'));
+    const activeTab = document.querySelector(`.gallery-tab[data-category="${category}"]`);
+    if (activeTab) activeTab.classList.add('active', 'shadow', 'bg-[#1a1a1a]', 'text-white');
+    galleryItems.forEach(item => {
+      item.style.display = (category === 'all' || item.dataset.category === category) ? '' : 'none';
     });
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const initCategory = params.get('category') || 'all';
+  filterGallery(initCategory);
+
+  galleryTabs.forEach(tab => {
+    tab.addEventListener('click', () => filterGallery(tab.dataset.category));
   });
 });
 
